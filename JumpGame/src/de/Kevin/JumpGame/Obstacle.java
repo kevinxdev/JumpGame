@@ -39,5 +39,11 @@ abstract class Obstacle extends Graphics {
         g.setColor(color());
         g.fillRect(x,y, getWidth(),getHeight());
     }
+    void setSettings(int width, int height, int x, int y) {
+        this.height = height;
+        this.width = width;
+        this.x = x;
+        this.y = y;
+    }
 
 }
