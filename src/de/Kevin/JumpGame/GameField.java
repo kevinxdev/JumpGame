@@ -62,7 +62,6 @@ class GameField extends JPanel implements ActionListener {
     public void comeDown() {
         for(int i = 0; i < obstacles.size(); i++) {
             y.set(i, y.get(i) + 10);
-            System.out.println(y.get(i));
         }
         updatePlatforms();
     }
