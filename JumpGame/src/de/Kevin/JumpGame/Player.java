@@ -23,6 +23,7 @@ public class Player extends GameField implements KeyListener {
     boolean jump2;
     int c1;
     int c2;
+    Robot robot;
 
     Player() {
         this.addKeyListener(this);
@@ -35,6 +36,11 @@ public class Player extends GameField implements KeyListener {
         jump2 = true;
         c1 = 0;
         c2 = 0;
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     void setPos() {
@@ -73,8 +79,7 @@ public class Player extends GameField implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == 'd') {
             x += 3;
-        }
-        if (e.getKeyChar() == 'a') {
+        } else if (e.getKeyChar() == 'a') {
             x -= 3;
         }
         this.repaint();
@@ -93,8 +98,6 @@ public class Player extends GameField implements KeyListener {
     }
 
     private void jumpEvent() {
-        try {
-            Robot robot = new Robot();
             int ys = y;
             timer = new Timer(10, new ActionListener() {
                 @Override
@@ -125,9 +128,6 @@ public class Player extends GameField implements KeyListener {
             });
             timer.start();
             timerStopped = false;
-        } catch (AWTException ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void stopTimer() {
@@ -146,6 +146,9 @@ public class Player extends GameField implements KeyListener {
             timer = new Timer(10, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    PointerInfo pi = MouseInfo.getPointerInfo();
+                    Point p = pi.getLocation();
+                    robot.mouseMove((int) p.getX(), (int) p.getY());
                     for (int i = 0; i < GameField.obstacles.size(); i++) {
                         if (y == GameField.y.get(i) - height && x >= GameField.x.get(i) - 20 && x <= GameField.x.get(i) + GameField.width.get(i) - 20) {
                             y = GameField.y.get(i) - height;
