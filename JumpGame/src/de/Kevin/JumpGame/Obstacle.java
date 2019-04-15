@@ -10,6 +10,7 @@ abstract class Obstacle extends Graphics {
     private int x;
     private int y;
     Random random;
+    Color c;
 
     Obstacle(int width, int height, int x, int y) {
         this.height = height;

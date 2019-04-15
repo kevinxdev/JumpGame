@@ -1,23 +1,48 @@
 package de.Kevin.JumpGame;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
+import java.lang.management.PlatformLoggingMXBean;
 import java.text.AttributedCharacterIterator;
+import javax.swing.*;
 
 public class BreakObstacle extends Obstacle {
 
+    boolean o;
+
     BreakObstacle(int width, int height, int x, int y) {
         super(width, height, x, y);
+        c = Color.gray;
+        o = true;
     }
 
     @Override
     public void properties() {
-
+        if (Player.y == GameField.y.get(Player.j) - Player.height && Player.x >= GameField.x.get(Player.j) - 20 && Player.x <= GameField.x.get(Player.j) + GameField.width.get(Player.j) - 20) {
+            if(o) {
+                int k = Player.j;
+                Timer t = new Timer(1500, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(GameField.obstacles.get(k) instanceof BreakObstacle) {
+                            c = Color.cyan;
+                            GameField.y.set(k, 720);
+                            GameField.obstacles.get(k).setColor(GameField.obstacles.get(k).color());
+                            o = false;
+                        }
+                    }
+                });
+                t.setRepeats(false);
+                t.start();
+            }
+        }
     }
 
     @Override
     public Color color() {
-        return Color.GRAY;
+        return c;
     }
 
     public void paintComponent(Graphics g) {

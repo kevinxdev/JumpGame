@@ -9,18 +9,20 @@ import java.awt.event.KeyListener;
 
 public class Player extends GameField implements KeyListener {
 
-    private int width;
-    private int height;
-    private int x;
-    private int y;
+    static int width;
+    static int height;
+    static int x;
+    static int y;
     private Timer timer;
     private boolean timerStopped;
     private boolean jumped;
-    boolean on;
-    int j;
+    static boolean on;
+    static int j;
     int counter;
     boolean jump;
     boolean jump2;
+    int c1;
+    int c2;
 
     Player() {
         this.addKeyListener(this);
@@ -31,6 +33,8 @@ public class Player extends GameField implements KeyListener {
         counter = 0;
         jump = true;
         jump2 = true;
+        c1 = 0;
+        c2 = 0;
     }
 
     void setPos() {
@@ -112,6 +116,11 @@ public class Player extends GameField implements KeyListener {
                         jumped = true;
                     }
                     repaint();
+                    c1++;
+                    if(c1 == 10) {
+                        setObstacles();
+                        c1 = 0;
+                    }
                 }
             });
             timer.start();
@@ -124,6 +133,12 @@ public class Player extends GameField implements KeyListener {
     private void stopTimer() {
         timer.stop();
         timerStopped = true;
+    }
+
+    private void setObstacles() {
+        if(Player.y <= Player.super.getHeight()) {
+            generateStructure();
+        }
     }
 
     private void onPlatform() {
@@ -171,6 +186,9 @@ public class Player extends GameField implements KeyListener {
                                     }
                                 }
                             });
+                            if(GameField.obstacles.get(j) instanceof BreakObstacle) {
+                                GameField.obstacles.get(j).properties();
+                            }
                         }
                     }
                     if(y >= (int) (Player.super.getHeight() + 33 - height - height / 1.5)) {

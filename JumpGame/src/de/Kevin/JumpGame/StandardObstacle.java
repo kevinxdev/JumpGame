@@ -8,6 +8,7 @@ public class StandardObstacle extends Obstacle {
 
     StandardObstacle(int width, int height, int x, int y) {
         super(width, height, x, y);
+        c = Color.black;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class StandardObstacle extends Obstacle {
 
     @Override
     public Color color() {
-        return Color.black;
+        return c;
     }
 
     public void paintComponent(Graphics g) {

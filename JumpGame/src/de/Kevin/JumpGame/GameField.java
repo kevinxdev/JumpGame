@@ -17,6 +17,7 @@ class GameField extends JPanel implements ActionListener {
     static ArrayList<Integer> width;
     static ArrayList<Integer> x;
     static ArrayList<Integer> y;
+    int heightInfo = super.getHeight();
     int counter;
 
     GameField() {
@@ -36,6 +37,7 @@ class GameField extends JPanel implements ActionListener {
         for(int i = 0; i < 60; i++) {
             generateStructure();
         }
+
 
     }
 
