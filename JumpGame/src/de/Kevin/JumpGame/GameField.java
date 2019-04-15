@@ -31,8 +31,11 @@ class GameField extends JPanel implements ActionListener {
         x = new ArrayList<>();
         y = new ArrayList<>();
         count = 0;
-        Timer t = new Timer(500, this);
-        t.start();
+        //Timer t = new Timer(500, this);
+        //t.start();
+        for(int i = 0; i < 60; i++) {
+            generateStructure();
+        }
 
     }
 
@@ -59,7 +62,7 @@ class GameField extends JPanel implements ActionListener {
         }
     }
 
-    public void comeDown() {
+    void comeDown() {
         for(int i = 0; i < obstacles.size(); i++) {
             y.set(i, y.get(i) + 10);
         }
@@ -72,6 +75,15 @@ class GameField extends JPanel implements ActionListener {
             obstacles.set(i, obstacles.get(i));
         }
         repaint();
+    }
+
+    void generateStructure() {
+        counter++;
+        if(counter % (random.nextInt(5)+5) == 0) {
+            createPlatforms();
+            counter = 0;
+        }
+        comeDown();
     }
 
     @Override

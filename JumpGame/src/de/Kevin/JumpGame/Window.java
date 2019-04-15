@@ -13,7 +13,7 @@ class Window extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.add(spieler);
-
+        this.setResizable(false);
         this.setVisible(true);
 
         spieler.setPos();

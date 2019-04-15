@@ -50,13 +50,13 @@ public class Player extends GameField implements KeyListener {
             y = super.getHeight() - height;
         }
         if (x > super.getWidth() - width) {
-            x = super.getWidth() - width;
+            x = 0;
         }
         if (y < 0) {
             y = 0;
         }
         if (x < 0) {
-            x = 0;
+            x = super.getWidth() - width;
         }
     }
 
@@ -106,7 +106,6 @@ public class Player extends GameField implements KeyListener {
                     } else if (y < (int) (Player.super.getHeight() + 33 - height - height / 1.5) && jumped) {
                         stopTimer();
                         onPlatform();
-                        //jumped = false;
                     }
 
                     if(y <= 0) {
@@ -115,7 +114,6 @@ public class Player extends GameField implements KeyListener {
                     repaint();
                 }
             });
-            //jumped = false;
             timer.start();
             timerStopped = false;
         } catch (AWTException ex) {
@@ -142,6 +140,7 @@ public class Player extends GameField implements KeyListener {
                     }
                     if(on){
                         y += 1;
+                        jump = false;
                     }
                     if(!on) {
                         if (y == GameField.y.get(j) - height && x >= GameField.x.get(j) - 20 && x <= GameField.x.get(j) + GameField.width.get(j) - 20) {
@@ -149,30 +148,29 @@ public class Player extends GameField implements KeyListener {
                             counter = 1;
                             jumped = false;
                             jump = true;
-                        } else {
                             on = true;
-                                addKeyListener(new KeyListener() {
-                                    @Override
-                                    public void keyTyped(KeyEvent e) {
+                            addKeyListener(new KeyListener() {
+                                @Override
+                                public void keyTyped(KeyEvent e) {
 
-                                    }
+                                }
 
-                                    @Override
-                                    public void keyPressed(KeyEvent e) {
+                                @Override
+                                public void keyPressed(KeyEvent e) {
 
-                                    }
+                                }
 
-                                    @Override
-                                    public void keyReleased(KeyEvent e) {
-                                        if(jump) {
-                                            if (e.getKeyChar() == KeyEvent.VK_SPACE) {
-                                                stopTimer();
-                                                jumpEvent();
-                                                jump = false;
-                                            }
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    if(jump) {
+                                        if (e.getKeyChar() == KeyEvent.VK_SPACE) {
+                                            stopTimer();
+                                            jumpEvent();
+                                            jump = false;
                                         }
                                     }
-                                });
+                                }
+                            });
                         }
                     }
                     if(y >= (int) (Player.super.getHeight() + 33 - height - height / 1.5)) {
